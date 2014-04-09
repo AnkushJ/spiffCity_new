@@ -46,7 +46,7 @@
       <!--start: Row -->
       <div class="row">
         <!--start: Logo -->
-        <div class="logo span3"> <i class="ico-charts circle"></i><a href="index.html" class="brand">Get<span>Spiffed</span>.</a> </div>
+        <div class="logo span3"> <i class="ico-charts circle"></i><a href="welcome" class="brand">Get<span>Spiffed</span>.</a> </div>
         <!--end: Logo -->
         <!--start: Navigation -->
         <div class="span9">

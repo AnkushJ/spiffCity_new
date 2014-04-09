@@ -1,4 +1,3 @@
-	$ = jQuery;
 
 jQuery(document).ready(function($){
 	/* ------------------- Fancybox --------------------- */
@@ -35,8 +34,7 @@ jQuery(document).ready(function($){
 	
 	
 	/* ------------------- Client Carousel --------------------- */
-
-	$('.clients-carousel').flexslider({
+	jQuery('.clients-carousel').flexslider({
 	    animation: "slide",
 		easing: "swing",
 	    animationLoop: true,
@@ -47,7 +45,7 @@ jQuery(document).ready(function($){
 		controlNav: false,
 		directionNav: false,
 		move: 2
-      });
+  });
 
 
 	/* ------------------ Back To Top ------------------- */
@@ -225,11 +223,11 @@ jQuery(document).ready(function () {
 
 
 jQuery(document).ready(function () {
-	
+	$ = jQuery;
 	jQuery('#portfolio-wrapper2').imagesLoaded(function() {
 		
-		var $container = $('#portfolio-wrapper2');
-			$select = $('#filters2 select');
+		var $container = jQuery('#portfolio-wrapper2');
+			$select = jQuery('#filters2 select');
 
 		// initialize Isotope
 		$container.isotope({

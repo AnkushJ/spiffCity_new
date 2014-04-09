@@ -23,9 +23,9 @@
 	<!-- end: Facebook Open Graph -->
 
     <!-- start: CSS -->
-    <link rel="stylesheet" href="assets/css/bootstrap.css">
-    <link rel="stylesheet" href=assets/css/bootstrap-responsive.css">
-	<link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/bootstrap.css');?> ">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/bootstrap-responsive.css');?> ">
+	<link rel="stylesheet" href="<?php echo base_url('assets/css/style.css'); ?> ">
 	<link href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700" type="text/css" rel="stylesheet">
 	<link href="http://fonts.googleapis.com/css?family=Droid+Serif" type="text/css" rel="stylesheet">
 	<link href="http://fonts.googleapis.com/css?family=Boogaloo" type="text/css" rel="stylesheet">
@@ -36,7 +36,11 @@
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-
+  <style>
+		.msg{
+			color: red;
+		}
+	</style>
 </head>
 <body>
 	
@@ -49,7 +53,7 @@
 			<!--start: Row -->
 			<div class="row">
       <!--start: Logo -->
-      <div class="logo span3"> <i class="ico-charts circle"></i><a href="index.html" class="brand">Get<span>Spiffed</span>.</a> </div>
+      <div class="logo span3"> <i class="ico-charts circle"></i><a href="<?php echo base_url('welcome'); ?>" class="brand">Get<span>Spiffed</span>.</a> </div>
       <!--end: Logo -->
       <!--start: Navigation -->
       <div class="span9">
@@ -57,10 +61,10 @@
           <div class="navbar-inner"> <a data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
             <div class="nav-collapse collapse">
               <ul class="nav">
-                <li> <a href="welcome">Home</a> </li>
-                <li><a href="redeem">Redeem</a></li>
-                <li><a href="people.html">People</a></li>
-                <li><a href="apps.html">Apps</a></li>
+                <li> <a href="<?php echo base_url('welcome'); ?>">Home</a> </li>
+                <li><a href="<?php echo base_url('redeem'); ?>">Redeem</a></li>
+                <li><a href="people">People</a></li>
+                <li><a href="apps">Apps</a></li>
                 <li class="active"><a id="home-login" href="#">Login</a></li>
                <!--  <li><a href="#" id="newpage-login">Login</a></li>-->
                 
@@ -138,96 +142,110 @@
         
       <!-- start: Signup Box -->
       <div class="span4">
-        <div id="signup">
-          <div class="title">Create an account. It's free!</div>
-            <form action="/ankush/spiffCity/signUp" method="post" class="form-stacked">
-            <fieldset>
-            <div class="clearfix">
-              <div class="input">
-                <input type="text" onblur="if(this.value=='') { this.value=this.defaultValue;} " onfocus="if(this.value==this.defaultValue)this.value='';" value="Your Email Address" placeholder="Your Email Address" label="Email address" name="email" tabindex="6" id="isignup_email">
+          <div id="signup">
+            <div class="title">Create an account. It's free!</div>
+            <form action="<?php echo base_url('signIn/signup'); ?>" method="post" class="form-stacked">
+              <fieldset>
+              <div class="clearfix">
+                <div class="input">
+                  <input id="isignup_email" tabindex="9" name="email" type="text" placeholder="EMail" value="<?php echo $email; ?>" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='') { this.value=this.defaultValue;} ">
+									<span id="spanEmail" class="msg"><?php echo form_error('email'); ?></span>
+                </div>
               </div>
-            </div>
-            <div class="clearfix">
-              <div class="input">
-                 <input type="text" onblur="if(this.value=='') { this.value=this.defaultValue;} " onfocus="if(this.value==this.defaultValue)this.value='';" value="Username" placeholder="Username" label="Username" name="username" tabindex="5" id="isignup_username">
+              <div class="clearfix">
+                <div class="input">
+										<input id="isignup_username" tabindex="10" name="username" type="text" placeholder="User Name" value="<?php echo $userid; ?>" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='') { this.value=this.defaultValue;} ">
+										<span id="spanUserName" class="msg"><?php echo form_error('username'); ?></span>
+                </div>
               </div>
-            </div>
-            <div class="clearfix">
-              <div class="input">
-                <input type="password" onblur="if(this.value=='') { this.value=this.defaultValue;} " onfocus="if(this.value==this.defaultValue)this.value='';" value="Password" placeholder="Password" label="Password" name="password" tabindex="7" id="isignup_password">
+              <div class="clearfix">
+                <div class="input">
+                  <input id="isignup_password" tabindex="11" name="password" type="password" placeholder="Password"onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='') { this.value=this.defaultValue;} ">
+                  <span id="spanPassword" class="msg"><?php echo form_error('password'); ?></span>
+                </div>
               </div>
-            </div>
-            <div class="clearfix">
-              <div class="input">
-                <ul class="inputs-list">
-                  <li>
-                    <label>
-                    <input type="checkbox" checked="checked" value="1" name="subscribe" tabindex="8" id="">
-                    <span>I accept the Get Spiffed  <a target="_blank" href="#"> privacy policy </a></span></label>
-                  </li>
-                </ul>
+							<div class="clearfix">
+                <div class="input">
+                  <input id="isignup_conf_password" tabindex="12" name="confPassword" type="password" placeholder="Confirm Password"onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='') { this.value=this.defaultValue;} ">
+                </div>
               </div>
-            </div>
-            <div class="clearfix  hidden">
-              <p class="clickedit">By clicking the button above, you agree to  Get Spiffed <a target="_blank" href="#"> terms of service </a> and  <a target="_blank" href="#"> privacy policy </a></p>
-            </div>
-            <div class="actions">
-              <input type="submit" value="Create your account" class="btn success large" tabindex="9">
-              <div class="connect-with"> <span> Or connect with </span></div>
-              <div class="social-connect-btn clearfix"> 
-              	<a class="connect-facebook" href="#"> <span> Connect w/ facebook </span> </a>
-                <a class="connect-twitter" href="#"> <span> Connect w/ twitter </span></a>
+              <div class="clearfix">
+                <div class="input">
+                  <ul class="inputs-list">
+                    <li>
+                      <label>
+                      <input id="isignup_subscribe" tabindex="13" type="checkbox" name="subscribe" value="1" checked="checked">
+                      <span>I accept the Get Spiffed  <a href="#" target="_blank"> privacy policy </a></span></label>
+                    </li>
+                  </ul>
+                </div>
               </div>
-            </div>
-            </fieldset>
-          </form>
+              <div class="clearfix  hidden">
+                <p class="clickedit">By clicking the button above, you agree to  Get Spiffed <a href="#" target="_blank"> terms of service </a> and  <a href="#" target="_blank"> privacy policy </a></p>
+              </div>
+              <div class="actions">
+                <input tabindex="14" class="btn success large" type="submit" value="Create your account">
+                <div class="connect-with"> <span> Or connect with </span></div>
+                <div class="social-connect-btn clearfix"> 
+                  <a href="#" class="connect-facebook"> <span> Connect w/ facebook </span> </a>
+                  <a href="#" class="connect-twitter"> <span> Connect w/ twitter </span></a>
+                </div>
+              </div>
+              </fieldset>
+            </form>
+          </div>
         </div>
-      </div>
-      <!-- End: Signup Box -->
-      <!-- start: Signin Box -->
-      <div class="span4">
-        <div class="sign-in" id="signup">
-          <div class="title">Already a member? Sign in:</div>
-          <form class="form-stacked" method="post" action="/signin">
-            <fieldset>
-            <div class="clearfix">
-              <div class="input">
-                <input type="text" onblur="if(this.value=='') { this.value=this.defaultValue;} " onfocus="if(this.value==this.defaultValue)this.value='';" value="Username" placeholder="Username" label="Username" name="username" tabindex="5" id="isignup_username">
-                <!--<span class="help-block error">Invalid username or password</span>-->
-                
+        <div class="span4">
+          <div id="signin" class="sign-in">
+            <div class="title">Already a member? Sign in:</div>
+            <form action="<?php echo base_url('signIn/signin'); ?>"" name="login" method="post" class="form-stacked">
+              <fieldset>
+              <div class="clearfix">
+                <div class="input">
+									<?php
+										if ($this->session->flashdata('error')){ 
+										?>
+										<!-- Notification -->
+												<h4 class="msg"><?php echo $this->session->flashdata('error'); ?></h4>
+										<!-- /Notification -->
+										<?php
+										}
+									?>
+									<input name="hiddenPage" value="login" type="hidden" >
+                  <input id="isignin_username" tabindex="4" name="username" type="text" placeholder="Username" value="<?php set_value('username'); ?>" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='') { this.value=this.defaultValue;} ">
+                </div>
               </div>
-            </div>
-            <div class="clearfix">
-              <div class="input">
-                <input type="password" onblur="if(this.value=='') { this.value=this.defaultValue;} " onfocus="if(this.value==this.defaultValue)this.value='';" value="Password" placeholder="Password" label="Password" name="password" tabindex="7" id="isignup_password">
+              <div class="clearfix">
+                <div class="input">
+                  <input id="isignin_password" tabindex="5" name="password" type="password" placeholder="Password" value="<?php echo set_value('password'); ?>" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='') { this.value=this.defaultValue;} ">
+								</div>
               </div>
-            </div>
-            <div class="clearfix">
-              <div class="input">
-                <ul class="inputs-list">
-                  <li>
-                    <label>
-                    <input type="checkbox" checked="checked" value="1" name="remember" tabindex="8" id="">
-                    <span>Remember me</span></label>
-                  </li>
-                </ul>
+              <div class="clearfix">
+                <div class="input">
+                  <ul class="inputs-list">
+                    <li>
+                      <label>
+                      <input id="isignin_remember" tabindex="6" type="checkbox" name="remember" value="1" checked="checked">
+                      <span>Remember me</span></label>
+                    </li>
+                  </ul>
+                </div>
               </div>
-            </div>
-            <div class="clearfix">
-               <p class="reset">Recover your <a title="Recover your username or password" href="forgot_password.html" tabindex="4">username or password</a></p>  
-              </div>      
-            <div class="actions">
-              <input type="submit" value="Log In" class="btn btn-primary btn-large" tabindex="9">
-              <div class="connect-with"> <span> Or login with </span></div>
-              <div class="social-connect-btn clearfix"> 
-              	<a class="connect-facebook" href="#"> <span> Login w/ facebook </span> </a>
-                <a class="connect-twitter" href="#"> <span> Login w/ twitter </span></a>
+              <div class="clearfix">
+                 <p class="reset">Recover your <a tabindex="7" href="/signin/reset" title="Recover your username or password">username or password</a></p>  
+                </div>      
+              <div class="actions">
+                <input tabindex="8" class="btn btn-primary btn-large" type="submit" value="Log In">
+                <div class="connect-with"> <span> Or login with </span></div>
+                <div class="social-connect-btn clearfix"> 
+                  <a href="#" class="connect-facebook"> <span> Login w/ facebook </span> </a>
+                  <a href="#" class="connect-twitter"> <span> Login w/ twitter </span></a>
+                </div>
               </div>
-            </div>
-            </fieldset>
-          </form>
+              </fieldset>
+            </form>
+          </div>
         </div>
-      </div>
       <!-- End: Signin Box -->
     </div>
 
@@ -253,13 +271,13 @@
       <!-- start: Footer Menu Links-->
       <div class="span9">
         <div id="footer-menu-links"> <ul id="footer-nav">
-            <li><a href="welcome">Home</a></li>
-            <li><a href="about">About</a></li>
+            <li><a href="<?php echo base_url('welcome'); ?>">Home</a></li>
+            <li><a href="<?php echo base_url('about'); ?>">About</a></li>
             <li><a href="blog">Blog</a></li>
-            <li><a href="contact">Contact</a></li>
+            <li><a href="<?php echo base_url('contact'); ?>">Contact</a></li>
             <li><a href="services">Business</a></li>
-            <li><a href="terms">Terms</a></li>
-            <li><a href="privacy">Privacy</a></li>
+            <li><a href="<?php echo base_url('terms'); ?>">Terms</a></li>
+            <li><a href="<?php echo base_url('privacy'); ?>">Privacy</a></li>
           </ul>
         </div>
       </div>
@@ -373,8 +391,8 @@
 
 <!-- start: Java Script -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="assets/js/jquery-1.8.2.js"></script>
-<script src="assets/js/bootstrap.js"></script>
+<script src="<?php echo base_url('assets/js/jquery-1.8.2.js'); ?> "></script>
+<script src="<?php echo base_url('assets/js/bootstrap.js'); ?>"></script>
 
 <!-- end: Java Script -->
 

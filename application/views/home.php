@@ -13,33 +13,38 @@
   <meta property="og:image" content="">-->
   <link href="assets/css/bootstrap.css" rel="stylesheet">
   <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
-  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="assets/css/style1.css" rel="stylesheet">
   <link href="assets/css/parallax-slider.css" rel="stylesheet">
-  
+  <link href="assets/css/validationEngine.jquery.css" rel="stylesheet">
+  <style>
+		.msg{
+			color: red;
+		}
+	</style>
 </head>
 
 <body>
   <header>
-  <div class="container">
-    <div class="row">
-      <div class="logo span3"> <i class="ico-charts circle"></i><a class="brand" href="index.html">Get<span>Spiffed</span>.</a> </div>
-      <div class="span9">
-        <div class="navbar navbar-inverse">
-          <div class="navbar-inner"> <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
-            <div class="nav-collapse collapse">
-              <ul class="nav">
-                <li class="active"> <a href="#">Home</a> </li>
-                <li><a href="redeem">Redeem</a></li>
-                <li><a href="people">People</a></li>
-                <li><a href="apps">Apps</a></li>
-                <li><a href="signIn" id="home-login">Login</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+		<div class="container">
+			<div class="row">
+				<div class="logo span3"> <i class="ico-charts circle"></i><a href="welcome" class="brand">Get<span>Spiffed</span>.</a> </div>
+				<div class="span9">
+					<div class="navbar navbar-inverse">
+						<div class="navbar-inner"> <a data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
+							<div class="nav-collapse collapse">
+								<ul class="nav">
+									<li class="active"> <a href="#">Home</a> </li>
+									<li><a href="redeem">Redeem</a></li>
+									<li><a href="people">People</a></li>
+									<li><a href="apps">Apps</a></li>
+									<li><a id="home-login" href="#signin">Login</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
   </header>
   <div class="slider-wrapper">
 		<div id="da-slider" class="da-slider" style="background-position: 3000% 0%;">
@@ -106,76 +111,95 @@
               </div>
           </div>       
         </div>      
-        <div class="span4">
+        <div class="span4" >
           <div id="signup">
-            <div class="title">Create an account. It's free!</div>
-            <form action="/ankush/spiffCity/signUp" method="post" class="form-stacked">
-              <fieldset>
-              <div class="clearfix">
-                <div class="input">
-                  <input id="isignup_email" tabindex="9" name="email" type="text" placeholder="EMail" value="<?php echo $email; ?>" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='') { this.value=this.defaultValue;} ">
-									<span id="spanEmail" class="msg"><?php echo form_error('email'); ?></span>
-                </div>
-              </div>
-              <div class="clearfix">
-                <div class="input">
-										<input id="isignup_username" tabindex="10" name="username" type="text" placeholder="User Name" value="<?php echo $userid; ?>" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='') { this.value=this.defaultValue;} ">
-										<span id="spanUserName" class="msg"><?php echo form_error('username'); ?></span>
-                </div>
-              </div>
-              <div class="clearfix">
-                <div class="input">
-                  <input id="isignup_password" tabindex="11" name="password" type="password" placeholder="Password"onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='') { this.value=this.defaultValue;} ">
-                  <span id="spanPassword" class="msg"><?php echo form_error('password'); ?></span>
-                </div>
-              </div>
-							<div class="clearfix">
-                <div class="input">
-                  <input id="isignup_conf_password" tabindex="12" name="confPassword" type="password" placeholder="Confirm Password"onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='') { this.value=this.defaultValue;} ">
-                </div>
-              </div>
-              <div class="clearfix">
-                <div class="input">
-                  <ul class="inputs-list">
-                    <li>
-                      <label>
-                      <input id="isignup_subscribe" tabindex="13" type="checkbox" name="subscribe" value="1" checked="checked">
-                      <span>I accept the Get Spiffed  <a href="#" target="_blank"> privacy policy </a></span></label>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="clearfix  hidden">
-                <p class="clickedit">By clicking the button above, you agree to  Get Spiffed <a href="#" target="_blank"> terms of service </a> and  <a href="#" target="_blank"> privacy policy </a></p>
-              </div>
-              <div class="actions">
-                <input tabindex="14" class="btn success large" type="submit" value="Create your account">
-                <div class="connect-with"> <span> Or connect with </span></div>
-                <div class="social-connect-btn clearfix"> 
-                  <a href="#" class="connect-facebook"> <span> Connect w/ facebook </span> </a>
-                  <a href="#" class="connect-twitter"> <span> Connect w/ twitter </span></a>
-                </div>
-              </div>
-              </fieldset>
-            </form>
-          </div>
+              <div class="title">Create an account. It's free!</div>                
+              <form class="form-stacked" method="post" action="welcome/signup" id="frmRegistration">
+               <fieldset>                      
+                  <div class="clearfix">
+                    <div class="input">
+												<?php
+													if ($this->session->flashdata('errorSignUp')){ 
+												?>
+													<!-- Notification -->
+															<h4 class="msg"><?php echo $this->session->flashdata('errorSignUp'); ?></h4>
+													<!-- /Notification -->
+												<?php
+													}
+												?>
+                      <input type="text" onblur="if(this.value=='') { this.value=this.defaultValue;} " onfocus="if(this.value==this.defaultValue)this.value='';" placeholder="Your Email Address" name="email" tabindex="6" id="email" class="validate[required,custom[email]]">
+                      <span id="user_email"></span>
+                    </div>
+                  </div>
+                  <div class="clearfix">
+                    <div class="input">
+                       <input type="text" onblur="if(this.value=='') { this.value=this.defaultValue;} " onfocus="if(this.value==this.defaultValue)this.value='';" placeholder="Username" name="username" tabindex="6" id="username" class="validate[required,minSize[4],custom[onlyLetterSp]] text-input">
+                       <span id="username_result"> </span>
+                    </div>
+                  </div>
+                  <div class="clearfix">
+                    <div class="input">
+                      <input type="password" class="validate[required,minSize[6],custom[onlyLetterNumber]] text-input" id="password" tabindex="7" name="password" placeholder="Password" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='') { this.value=this.defaultValue;} "><span class="password-verdict"></span>                
+                    </div>
+                  </div>
+                  <div class="clearfix">
+                    <div>
+                        <input type="password" onblur="if(this.value=='') { this.value=this.defaultValue;} " onfocus="if(this.value==this.defaultValue)this.value='';" placeholder="Confirm Password" name="confirm_password" tabindex="7" id="signup_confirm_password" class="validate[required,equals[password]] text-input">
+                    </div>           
+                  </div>
+                  <div class="clearfix">
+                    <div class="input">
+                      <ul class="inputs-list">
+                        <li>
+                          <label>
+                          <input type="checkbox" checked="checked" value="1" name="subscribe" tabindex="8" id="isignup_subscribe" class="validate[required]">
+                          <span>I accept the Get Spiffed  <a target="_blank" href="#"> privacy policy </a></span></label>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="clearfix  hidden">
+                    <p class="clickedit">By clicking the button above, you agree to  Get Spiffed <a target="_blank" href="#"> terms of service </a> and  <a target="_blank" href="#"> privacy policy </a></p>
+                  </div>
+                  <div class="actions">              
+                    <input type="submit" value="Create your account" class="btn success large" tabindex="9">    
+                    <div class="connect-with"> <span> Or connect with </span></div>
+                    <div class="social-connect-btn clearfix">
+                     <!--fb:login-button show-faces="true" width="200" max-rows="1"></fb:login-button-->
+                     <!--<a href="spiffcity/home/fblogin" class="connect-facebook"> <span> Connect w/ facebook </span> </a>-->
+                     <a class="connect-facebook" href="https://www.facebook.com/dialog/oauth?client_id=561885653907144&amp;redirect_uri=http%3A%2F%2F180.149.246.126%2Fgaurav%2Fspiffcity&amp;state=f546ffb8024a29bde00cbcb9d83600c3&amp;sdk=php-sdk-3.2.3"> <span> Connect w/ facebook </span> </a>
+                     
+                     <!---<a href="#" class="connect-twitter"> <span> Connect w/ twitter </span></a>-->
+                    </div>
+                  </div>
+                </fieldset>
+              </form>
+            </div>
         </div>
         <div class="span4">
           <div id="signin" class="sign-in">
             <div class="title">Already a member? Sign in:</div>
-            <form action="signin" method="post" class="form-stacked">
+            <form id="frmSignin" action="<?php echo base_url('welcome/signin'); ?>" name="homeLogin" method="post" class="form-stacked">
               <fieldset>
               <div class="clearfix">
                 <div class="input">
-                  <input id="isignin_username" tabindex="4" name="username" type="text" placeholder="Username" value="Username" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='') { this.value=this.defaultValue;} ">
-                  <!--<span class="help-block error">Invalid username or password</span>-->
-                  
+									<?php
+										if ($this->session->flashdata('error')){ 
+									?>
+										<!-- Notification -->
+												<h4 class="msg"><?php echo $this->session->flashdata('error'); ?></h4>
+										<!-- /Notification -->
+									<?php
+										}
+									?>
+									<input name="hiddenPage" value="page" type="hidden" >
+                  <input id="isignin_username" tabindex="4" name="username" type="text" placeholder="Username" value="<?php set_value('username'); ?>" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='') { this.value=this.defaultValue;} ">
                 </div>
               </div>
               <div class="clearfix">
                 <div class="input">
-                  <input id="isignin_password" tabindex="5" name="password" type="password" placeholder="Password" value="Password" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='') { this.value=this.defaultValue;} ">
-                </div>
+                  <input id="isignin_password" tabindex="5" name="password" type="password" placeholder="Password" value="<?php echo set_value('password'); ?>" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='') { this.value=this.defaultValue;} ">
+								</div>
               </div>
               <div class="clearfix">
                 <div class="input">
@@ -194,8 +218,18 @@
               <div class="actions">
                 <input tabindex="8" class="btn btn-primary btn-large" type="submit" value="Log In">
                 <div class="connect-with"> <span> Or login with </span></div>
-                <div class="social-connect-btn clearfix"> 
-                  <a href="#" class="connect-facebook"> <span> Login w/ facebook </span> </a>
+                <div class="social-connect-btn clearfix">
+									<?php if(!$fb_data['me']): ?>
+									<a href="<?php echo $fb_data['loginUrl']; ?>" class="connect-facebook">
+										<span> Login w/ facebook </span>
+									</a>
+										<!-- Or you can use XFBML -->
+									<div class="fb-login-button" data-show-faces="false" data-width="100" data-max-rows="1" data-scope="email,user_birthday,publish_stream"></div>
+										<?php else: ?>
+										<img class="pic" alt="" src="https://graph.facebook.com/<?php echo $fb_data['uid']; ?>/picture" />
+											Hi <?php echo $fb_data['me']['name']; ?>,
+											<a href="<?php echo site_url('topsecret'); ?>">You can access the top secret page</a> or <a href="<?php echo $fb_data['logoutUrl']; ?>">logout</a>
+									<?php endif; ?>
                   <a href="#" class="connect-twitter"> <span> Login w/ twitter </span></a>
                 </div>
               </div>
@@ -336,6 +370,7 @@
       </div>
     </div>
   </div>
+	<?php echo '<pre>';print_r($fb_data);?>
   <div id="copyright">
     <div class="container">
       <div class="span12">
@@ -348,8 +383,11 @@
   <script src="<?php echo base_url(); ?>assets/js/jquery-1.8.2.js"></script>
   <script src="<?php echo base_url(); ?>assets/js/jquery.raty.min.js"></script>
   <script src="<?php echo base_url(); ?>public/js/workaround.js"></script>
-  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	<script src="<?php echo base_url(); ?>assets/js/bootstrap.js"></script>
+ 	<script src="<?php echo base_url(); ?>assets/js/bootstrap.js"></script>
+  <script src="<?php echo base_url(); ?>assets/js/jquery.validationEngine-en.js"></script>
+  <script src="<?php echo base_url(); ?>assets/js/jquery.validationEngine.js"></script>
+  <script src="<?php echo base_url(); ?>assets/js/pwstrength.js"></script?
+	</script> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.caroufredsel/6.1.0/jquery.carouFredSel.packed.js"></script>
   <script src="<?php echo base_url(); ?>assets/js/isotope.js"></script>
   <script src="<?php echo base_url(); ?>assets/js/flexslider.js"></script>
@@ -360,7 +398,8 @@
   <script src="assets/js/fancybox.js"></script>
   <script>
     jQuery(document).ready(function() {
-       jQuery("#act_carousel_vertical").jCarouselLite({
+			$ = jQuery;
+        jQuery("#act_carousel_vertical").jCarouselLite({
           vertical: true,  
           visible: 5,
           scroll: 1,
@@ -375,7 +414,94 @@
           auto: 3000,  
           speed: 2000,
           circular: false  
-        }); 
+        });
+				 
+									
+									 //to validate the signup form input fields !!
+				jQuery("#frmRegistration").validationEngine('attach',{
+					binded: false
+				});
+				jQuery("#frmSignin").validationEngine('attach',{
+					binded: false
+				});
+				
+				
+				 // to show email availability
+				jQuery("#email").keyup (function(){
+					if($("#email").val().length <1){
+						$("#user_email").html("<font color='RED'></font>");
+					}
+					else{
+						if (jQuery("#email").val().length>5) {
+							jQuery("#user_email").html("font color='GREEN'>Checking</font>");
+							jQuery.ajax({
+								type:"POST",
+								url:"<?php echo base_url('signUp'); ?>/check_email_availability",
+								data:"user_email="+jQuery("#email").val(),
+								success:function(msg){
+									if (msg['success'] == true) {
+										jQuery("#user_email").html("<font color='GREEN'>Available</font>");
+									}else{
+										jQuery("#user_email").html("<font color='RED'>Already Taken</font>");
+									}
+								}
+							});
+						}
+					}
+				});
+					
+					
+					// to show username availability
+				  $("#username").keyup(function(){
+						if($("#username").val().length <1){
+							$("#username_result").html("<font color='RED'></font>");
+						}
+						else{
+							if($("#username").val().length <4){
+								$("#username_result").html("<font color='RED'>Minimuim amount of chars is 4.</font>");
+							}
+							else{
+								$("#username_result").html("<font color='GREEN'>Checking...");
+								$.ajax({
+									type:"POST",
+									url :"<?php echo base_url('signUp'); ?>/check_username_availability",
+									data:"user="+$("#username").val(),
+									success: function(msg){
+										if (msg['success'] == true) {
+											$("#username_result").html("<font color='GREEN'>Available.</font");
+										}else{
+											$("#username_result").html("<font color='RED'>Already Taken.</font>");
+										}
+									}
+								});
+							}
+						}
+					});
+					
+					
+					//to show password strength during signup input !!
+					var options = {
+						minChar: 5,
+						bootstrap3: false,
+					};
+					jQuery("#password").pwstrength(options);
+					jQuery(document).ready(function () {
+						"use strict";
+						var options = {
+							minChar: 8,
+							bootstrap3: false,
+							errorMessages: {
+								password_too_short: "<font color='red'>The Password is too short</font>",
+								same_as_username: "Your password cannot be the same as your username"
+							},
+							scores: [17, 26, 40, 50],
+							verdicts: ["Weak", "Normal", "Medium", "Strong", "Very Strong"],
+							showVerdicts: true,
+							showVerdictsInitially: false,
+							raisePower: 1.4,
+							usernameField: "#username",
+						};
+				  }); 	 
     });
   </script>
   <script type="text/javascript">
