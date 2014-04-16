@@ -131,11 +131,11 @@
             <div class="dropdown">    
               <ul class="nav nav-pills" role="menu" aria-labelledby="dLabel">
                 <li class="dropdown">
-                  <a href="#" data-toggle="dropdown" role="button" id="drop4" class="dropdown-toggle name_drop"><?php if($this->session->userdata('login')){$firstname = $this->session->userdata('firstname');}else{$firstname = $fb_data['me']['first_name'];} if(isset($firstname)) echo ucFirst($firstname);?><!--<img src='https://graph.facebook.com//picture'>--></a>
+                  <a href="#" data-toggle="dropdown" role="button" id="drop4" class="dropdown-toggle name_drop"><?php if($this->session->userdata('fb')){$firstname = $fb_data['me']['first_name'];} else{ if($this->session->userdata('first_name')){$firstname = $this->session->userdata('first_name');}else{$firstname = $this->session->userdata('userid');}} if(isset($firstname)) echo ucFirst($firstname);?><!--<img src='https://graph.facebook.com//picture'>--></a>
                   <ul aria-labelledby="drop4" role="menu" class="dropdown-menu" id="menu1">
                     <li role="presentation"><a href="<?php echo base_url(); ?>dashboard/" tabindex="-1" role="menuitem" class="spec">Dashboard</a></li>
                     <li role="presentation"><a href="<?php echo base_url(); ?>redeem" tabindex="-1" role="menuitem" class="spec">Redeem</a></li>
-                    <li role="presentation"><a href="<?php echo base_url(); ?>people" tabindex="-1" role="menuitem" class="spec">People</a></li>
+                    <li role="presentation"><a href="" tabindex="-1" role="menuitem" class="spec">People</a></li>
                     <li role="presentation"><a href="#myModalPost" tabindex="-1" role="menuitem" class="spec"  data-toggle="modal">Add Post</a></li>
                     <li role="presentation"><a href="<?php echo base_url(); ?>popular/signout" tabindex="-1" role="menuitem" class="spec">Log Out</a></li>
                   </ul>
@@ -162,8 +162,7 @@
         <div class="box span12">
           <div class="box-content">
             <div class="masonry-gallery masonry" id="popular_view">
-              <?php
-             // echo "<pre>"; print_r($this->session->userdata('fb_data')); exit;
+              <?php 
               if($likes_crowd_id){
                 foreach($likes_crowd_id as $like){
                   $crowd_likes[] = $like['crowdcast_id'];
@@ -190,7 +189,7 @@
                   <button id="btn_like_<?php echo $crowd['id'];?>" type="button" style="<?php echo $like;?>" class="Button btn btn-like" title="like" data-crowdcast_id="<?php echo $crowd['id']; ?>"><i class="icon-black icon-heart"></i></button>
                   <button id="btn_unlike_<?php echo $crowd['id'];?>" type="button" style="<?php echo $unlike;?>" class="Button btn btn-unlike" title="unlike" data-crowdcast_id="<?php echo $crowd['id'];?>"><i class="icon-red icon-heart"></i></button>
                 </div>
-                  <a style="background:url(assets/img/img_1.jpg)" title="Sample Image 1" href="#myModal"   role="button" data-toggle="modal" > <img style="width:300px;"  class="post_image grayscale " data-crowdcast_id="<?php echo $crowd['id'];?>" src="<?php echo base_url() . "assets/img/crowdcast/" . $crowd['img']; ?>" alt="Sample Image 1"></a>
+                  <a style="background:url(assets/img/img_1.jpg)" title="Sample Image 1" href="#"   role="button" data-toggle="modal" > <img style="width:300px;"  class="post_image grayscale " data-crowdcast_id="<?php echo $crowd['id'];?>" src="<?php echo base_url() . "assets/img/crowdcast/" . $crowd['img']; ?>" alt="Sample Image 1"></a>
                 <div class="activity-details">
                   <div class="activity-title"><?php echo $crowd['title']; ?></div>
                   <div class="img_user_details"><i class="icon-user icon-black"></i><a href="#" class="img_user_name"><?php echo $firstname; ?></a> into CrowdCast</div>
@@ -207,7 +206,11 @@
     </div>
     
     <div id="myModal"  class="modal hide fade crowd_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-   
+         <!--<img src='<?php //echo base_url();?>public/images/ajaxLoader.gif' width="64" height="64" /><br>Loading..-->
+    </div>
+    
+    <div class="modal-overlay" aria-labelledby="myModalLabel" aria-hidden="">
+      <img id="loading" src='<?php echo base_url();?>public/images/ajaxLoader.gif' width="64" height="64" />
     </div>
     
     <div id="myModalPost" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -265,19 +268,28 @@
 
     
     <script type="text/javascript">
+        //$(document).ajaxStart(function(){
+        // $("#myModalLoading").css("display","block");
+        //});
+       
          $(document).on("click",".post_image", function(){
           var crowdcast_id = $(this).attr("data-crowdcast_id");
           var like_btn_id = $(this).data("like_btn");
           var unlike_btn_id = $(this).data("unlike_btn");
+          var user_id = "<?php echo $this->session->userdata('id'); ?>";
+          $("#loading").css({position:"absolute", left:$(window).width/2,top:$(window).height/2});
+          $(".modal-overlay").css("display","block");
           $.ajax({
             type:"POST",
             url:"<?php echo base_url();?>popular/get_crowdcast_details",
             data:{              
                 'crowdcast_id':crowdcast_id,
+                'user_id': user_id
               },
-            
             success:function(comments){            
               $("#myModal").html(comments);
+              $("#myModal").modal('show').delay(1000);
+              $(".modal-overlay").css("display","none");
             }
           })
         });
@@ -303,7 +315,7 @@
       
       $(document).on("click",".comment_btn .btn",function(){
         var crowdcast_id = $(this).data("crowdcast_id");
-        var user_id ="<?php echo $this->session->userdata("id");   ?>";
+        var user_id = "<?php echo $this->session->userdata("id"); ?>";
         var txt = $(this).parents(".span10").find(".content-txt").val();
         var user_img_path = "<?php echo base_url(); ?>assets/img/avatar.jpg";
         var user_name = "<?php echo ucFirst($this->session->userdata('firstname')); ?>";
@@ -354,7 +366,7 @@
       
       
       $(document).on("click",".btn-like",function(){
-        var user_id = "<?php echo $this->session->userdata("id");   ?>";
+        var user_id = "<?php echo $this->session->userdata('id'); ?>";
         var crowdcast_id = $(this).data("crowdcast_id");
         $.ajax({
           type:"POST",
@@ -376,7 +388,7 @@
       
       
       $(document).on("click",".btn-unlike",function(){
-        var user_id = "<?php echo $this->session->userdata("id");   ?>"
+        var user_id = "<?php echo $this->session->userdata('id'); ?>";
         var crowdcast_id = $(this).data("crowdcast_id");
         $.ajax({
           type:"POST",

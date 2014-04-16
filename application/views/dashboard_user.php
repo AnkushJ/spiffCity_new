@@ -4,11 +4,11 @@
 		<div class="span2 main-menu-span">
 			<div class="nav-collapse sidebar-nav">
 				<ul class="nav nav-tabs nav-stacked main-menu">
-					<li><a href="index.html"><i class="icon-home icon-white"></i><span class="hidden-tablet"> Home</span></a></li>
-					<li><a href="<?php echo base_url();?>dashboard"><i class="icon-dashboard icon-white"></i><span class="hidden-tablet"> DashBoard</span></a></li>
-					<li><a href="profile.html"><i class="icon-user icon-white"></i><span class="hidden-tablet"> My Account</span></a></li>
-					<li><a href="friends.html"><i class="icon-globe icon-white"></i><span class="hidden-tablet"> Friends</span></a></li>
-					<li><a href="invite.html"><i class="icon-bullhorn icon-white"></i><span class="hidden-tablet"> Invite Friends</span></a></li> 
+					<li><a href="<?php echo base_url();?>popular"><i class="icon-home icon-white"></i><span class="hidden-tablet"> Home</span></a></li>
+					<li class="active"><a href="<?php echo base_url();?>dashboard"><i class="icon-dashboard icon-white"></i><span class="hidden-tablet"> DashBoard</span></a></li>
+					<li><a href="<?php echo base_url();?>profile"><i class="icon-user icon-white"></i><span class="hidden-tablet"> My Account</span></a></li>
+					<li><a href="<?php echo base_url();?>friends"><i class="icon-globe icon-white"></i><span class="hidden-tablet"> Friends</span></a></li>
+					<li id="invite"><a href="<?php echo base_url();?>friends"><i class="icon-bullhorn icon-white"></i><span class="hidden-tablet"> Invite Friends</span></a></li> 
 					<li><a href="activities.html"><i class="icon-tasks icon-white"></i><span class="hidden-tablet"> Activities</span></a></li>
 					<li><a href="<?php echo base_url();?>redeem"><i class="icon-tags icon-white"></i><span class="hidden-tablet"> Redeem</span></a></li>
 				</ul>
@@ -55,9 +55,9 @@
 					<div class="box span3" ondesktop="span3" ontablet="span6">
 						<div class="my-profile">
 							<div class="my-profile-img">
-								<img src="">                                
+								<img class="fbPic" alt="" src="<?php if($this->session->userdata('fb')){ echo 'https://graph.facebook.com/'. $user_data[0]['fb_id'] . '/picture';}else{if($user_data[0]['img']){ echo base_url('public/upload/user') . '/' . $user_data[0]['img'];}}?>" />                                
               </div>
-							<div class="user-name">user name</div>
+							<div class="user-name"><?php echo $user_data[0]['first_name']?></div>
 							<div class="follows">
 								<span>
 									Followers 
@@ -68,7 +68,16 @@
 							</div>
 							<a class="profile-link" data-original-title="Profile completeness" data-placement="top" rel="tooltip" href="profile.html">
 								<div class="progress progress-striped">
-										<div style="width: 0;" class="bar">
+										<div style="width: <?php if($user_data[0]['active'] != 1){
+																						if(isset($user_data[0]['password'])){
+																							echo '60%;';
+																						}else{
+																							echo '30%;';
+																						}
+																					}else{
+																						echo '100%;';
+																					}
+																	?>" class="bar">
 										</div>
 								</div>
 							</a>
@@ -82,7 +91,7 @@
 					</div>
 					<div ondesktop="span5" ontablet="span10" class="box span5 noMargin">
 						<div class="tot-spiff-box">
-							<h2>211,252</h2>   
+							<h2><?php echo $user_data[0]['spiff_points']; ?></h2>   
 							<h3>Spiffs</h3>     
 						</div>
 					</div>
@@ -92,10 +101,7 @@
 								<i class="fa-icon-thumbs-up"> </i>
 								<span class="plus"> + </span>
 								<span class="percent"> % </span>
-								<div style="width:120px; display:inline;" >
-									<canvas height="120" width="120"></canvas>
-									<input type="text" class="orangeCircle" value="0" style="width: 60px; position: absolute; margin-top: 42px; margin-left: -120px; font-size: 27px; border: medium none; background: none repeat scroll 0% 0% transparent; font-family: Arial; font-weight: bold; text-align: center; color: rgb(250, 88, 51); padding: 2px 0px 0px;" readonly="readonly">
-								</div>
+								<input type="text" class="orangeCircle" value="0" style="width: 60px; position: absolute; margin-top: 40px !important; margin-left: -120px !important; font-size: 27px; border: medium none; background: none repeat scroll 0% 0% transparent; font-family: Arial; font-weight: bold; text-align: center; color: rgb(250, 88, 51); padding: 2px 0px 0px;" readonly="readonly">
 							</div>
 							<div class="box-title">Activity Meter</div>
 						</div>
@@ -112,39 +118,36 @@
               	<i class="fa-icon-bullhorn"></i>
 								<span class="plus">+</span>
 								<span class="percent"></span>
-              	<div style="width:120px;display:inline;"><canvas height="120" width="120"></canvas><input type="text" class="blueCircle" value="0" style="width: 60px; position: absolute; margin-top: 42px; margin-left: -90px; font-size: 30px; border: medium none; background: none repeat scroll 0% 0% transparent; font-family: Arial; font-weight: bold; text-align: center; color: rgb(47, 171, 233); padding: 2px 0px 0px;" readonly="readonly"></div>
-               	</div>
-								<div class="box-small-title">Redeemed Offers
+								<input type="text" class="blueCircle" value="0" style="width: 60px; position: absolute; margin-top: 42px; margin-left: -90px; font-size: 30px; border: medium none; background: none repeat scroll 0% 0% transparent; font-family: Arial; font-weight: bold; text-align: center; color: rgb(47, 171, 233); padding: 2px 0px 0px;" readonly="readonly">
 							</div>
+							<div class="box-small-title">Redeemed Offers</div>
 						</div>
 						<div ondesktop="span2" ontablet="span4" class="span2">
 							<div class="circleStatsItem yellow">
               	<i class="fa-icon-user"></i>
 								<span class="plus">+</span>
 								<span class="percent"></span>
-              	<div style="width:120px;display:inline;"><canvas height="120" width="120"></canvas><input type="text" class="yellowCircle" value="0" style="width: 60px; position: absolute; margin-top: 42px; margin-left: -90px; font-size: 30px; border: medium none; background: none repeat scroll 0% 0% transparent; font-family: Arial; font-weight: bold; text-align: center; color: rgb(231, 229, 114); padding: 2px 0px 0px;" readonly="readonly"></div>
-		          	</div>
-							<div class="box-small-title"> friends</div>
+              	<input type="text" class="yellowCircle" value="0" style="width: 60px; position: absolute; margin-top: 42px; margin-left: -90px; font-size: 30px; border: medium none; background: none repeat scroll 0% 0% transparent; font-family: Arial; font-weight: bold; text-align: center; color: rgb(231, 229, 114); padding: 2px 0px 0px;" readonly="readonly">
+		          </div>
+							<div class="box-small-title">Friends</div>
 						</div>
 						<div ondesktop="span2" ontablet="span4" class="noMargin span2">
 							<div class="circleStatsItem pink">
               	<i class="fa-icon-globe"></i>
 								<span class="plus">+</span>
 								<span class="percent">%</span>
-              	<div style="width:120px;display:inline;"><canvas height="120" width="120"></canvas><input type="text" class="pinkCircle" value="0" style="width: 60px; position: absolute; margin-top: 42px; margin-left: -90px; font-size: 30px; border: medium none; background: none repeat scroll 0% 0% transparent; font-family: Arial; font-weight: bold; text-align: center; color: rgb(228, 43, 117); padding: 2px 0px 0px;" readonly="readonly"></div>
-              	</div>
-								<div class="box-small-title">Spiffs among friends 
-								</div>
-							</div>
+              	<input type="text" class="pinkCircle" value="0" style="width: 60px; position: absolute; margin-top: 42px; margin-left: -90px; font-size: 30px; border: medium none; background: none repeat scroll 0% 0% transparent; font-family: Arial; font-weight: bold; text-align: center; color: rgb(228, 43, 117); padding: 2px 0px 0px;" readonly="readonly">
+              </div>
+							<div class="box-small-title">Spiffs among friends</div>
+						</div>
 						<div ondesktop="span2" ontablet="span4" class="span2">
-						<div class="circleStatsItem lightorange">
-							<i class="fa-icon-shopping-cart"></i>
-							<span class="plus">+</span>
-							<span class="percent"></span>
-							<div style="width:120px;display:inline;"><canvas height="120" width="120"></canvas><input type="text" class="lightOrangeCircle" value="0" style="width: 60px; position: absolute; margin-top: 42.8571px; margin-left: -90px; font-size: 30px; border: medium none; background: none repeat scroll 0% 0% transparent; font-family: Arial; font-weight: bold; text-align: center; color: rgb(244, 167, 12); padding: 2px 0px 0px;" readonly="readonly"></div>
-            	</div>
-							<div class="box-small-title">purchases
+							<div class="circleStatsItem lightorange">
+								<i class="fa-icon-shopping-cart"></i>
+								<span class="plus">+</span>
+								<span class="percent"></span>
+								<input type="text" class="lightOrangeCircle" value="0" style="width: 60px; position: absolute; margin-top: 42.8571px; margin-left: -90px; font-size: 30px; border: medium none; background: none repeat scroll 0% 0% transparent; font-family: Arial; font-weight: bold; text-align: center; color: rgb(244, 167, 12); padding: 2px 0px 0px;" readonly="readonly">
 							</div>
+							<div class="box-small-title">purchases</div>
 						</div>
 					</div>
 				</div>
@@ -160,19 +163,11 @@
 						<p>Activities</p>
 						<span class="notification green">$value</span>
 					</a>
-					<a class="quick-button span2" href="redeem.html">
-						<i class="fa-icon-shopping-cart"></i>
-						<p>Offers</p>
-					</a>
-					<a class="quick-button span2" href="redeem.html">
-						<i class="fa-icon-tags"></i>
-						<p>Rewards</p>
-					</a>
 					<a class="quick-button span2">
 						<i class="fa-icon-rss"></i>
 						<p>Spiffs</p>
 					</a>
-					<a class="quick-button span2">
+					<a class="quick-button span2" href="<?php echo base_url('redeem');?>">
 						<i class="fa-icon-gift"></i>
 						<p>Gifts</p>
 						<span class="notification red">$value</span>

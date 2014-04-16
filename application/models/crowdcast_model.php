@@ -36,12 +36,12 @@
       }
     }
     
-    function get_selected_crowdcast_data($crowdcast_id){
+    function get_selected_crowdcast_data($crowdcast_id, $userid){
       $this->db->where('crowdcast_id',$crowdcast_id);
+      $this->db->where('user_id',$userid);
       $crowdcast_like = $this->db->get('crowdcast_likes');
       $crowdcast_data['like_data'] = $crowdcast_like->result_array();
       $crowdcast_data['likes'] = $crowdcast_like->num_rows();
-      
       $this->db->select('*');      
       $this->db->from('crowdcast_comments');
       $this->db->join('sp_crowdcast', 'sp_crowdcast.id = crowdcast_comments.crowdcast_id', 'left');
@@ -51,13 +51,10 @@
       $comment_data = $this->db->get();
       $crowdcast_data['comment_data']= $comment_data->result_array();
       $crowdcast_data['comments']= $comment_data->num_rows();
-      //print_r($crowdcast_data);exit();
       
       $this->db->where('id',$crowdcast_id);
       $crowdcast_img = $this->db->get('sp_crowdcast');
       $crowdcast_data['crowdcast_data']= $crowdcast_img->result_array();
-      //echo "<pre>";print_r($crowdcast_data);exit();
-      //print_r($crowdcast_data);exit;
       
       if($crowdcast_data)
       {
@@ -78,8 +75,11 @@
       }
     }
     
-    function add_comments($comment_data){
+    function add_comments($comment_data,$points){
       if($this->db->insert('crowdcast_comments',$comment_data)){
+        $this->db->where('id',$comment_data['user_id']);
+        $this->db->set('spiff_points',$points);
+        $result = $this->db->update('sp_users');
         return true;
       }else{
         return false;
@@ -105,18 +105,24 @@
       }
     }
     
-    function add_likes($likes){
+    function add_likes($likes,$points){
       if($this->db->insert('crowdcast_likes',$likes))
       {
+        $this->db->where('id',$likes['user_id']);
+        $this->db->set('spiff_points',$points);
+        $result = $this->db->update('sp_users');
         return true;
       }else{
         return false;
       }
     }
     
-    function unlike_post($unlike_data){
+    function unlike_post($unlike_data,$points){
       $this->db->where($unlike_data);
       if($this->db->delete('crowdcast_likes')){
+        $this->db->where('id',$unlike_data['user_id']);
+        $this->db->set('spiff_points',$points);
+        $result = $this->db->update('sp_users');
         return true;
       }else{
         return false;
@@ -172,16 +178,27 @@
       }else{
         return false;
       }
-      //$i = 0;
-      //foreach($user_data['crowdcast'] as $crowd){
-      //$this->db->where('crowdcast_id',$user_data['crowdcast'][$i]['id']);
-      //$crowdcast_data['comments'] = $this->db->get('crowdcast_comments')->result_array();
-      //$this->db->select('count(*) As num_likes');
-      //$this->db->where('crowdcast_id',$user_data['crowdcast'][$i]['id']);
-      //$crowdcast_data['likes'] = $this->db->get('crowdcast_likes')->result_array();
-      //$i++;
-      //}
-      //echo"<pre>";print_r($user_data);exit();
-    }    
+    }
+    
+    function add_spiff_points($user_id,$points){
+      $this->db->where('id',$user_id);
+      $result = $this->db->update('sp_users',$spiff);
+      if($result){
+        return true;
+      }else{
+        return false;
+      }
+    }
+    
+    function get_spiff_points($title){
+      $this->db->select('spiff_points');
+      $this->db->where('title',$title);
+      $points = $this->db->get('sp_points');
+      if($points->num_rows()>0){
+        return $points->result_array();
+      }else{
+        return false;
+      }
+    }
   }
 ?>

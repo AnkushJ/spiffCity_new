@@ -30,51 +30,6 @@
 				}
     }
 		
-//		public function signup(){
-//      $config = array(
-//                 array(
-//                       'field'   => 'username', 
-//                       'label'   => 'username', 
-//                       'rules'   => 'required|alpha_numeric|is_unique[sp_users.userid]|max_length[10]|min_length[4]'
-//                    ),
-//                  
-//                 array(
-//                       'field'   => 'email', 
-//                       'label'   => 'email', 
-//                       'rules'   => 'required|valid_email|is_unique[sp_users.email]'
-//                    ),
-//                 array(
-//                       'field'   => 'password', 
-//                       'label'   => 'password', 
-//                       'rules'   => 'required|min_length[5]|max_length[12]|matches[confPassword]'
-//                    ),
-//                 array(
-//                       'field'   => 'confPassword', 
-//                       'label'   => 'confPassword', 
-//                       'rules'   => 'required'
-//                    ));
-//      $data = array(
-//                  'userid' => $this->input->post('username') ,
-//                  'email' => $this->input->post('email') ,
-//                  'password' => $this->input->post('password'));
-//			$this->form_validation->set_message('is_unique', 'entered value already exists');
-//      $this->form_validation->set_rules($config);
-//      if ($this->form_validation->run() == FALSE){
-//        $this->load->view('signin',$data);
-//      }
-//      else{
-//          $data = array(
-//                  'userid' => $this->input->post('username') ,
-//                  'email' => $this->input->post('email') ,
-//                  'password' => $this->input->post('password'));
-// 				$date	= date("Y-m-d");
-//        $data['userCreatedOn']	= $date;
-//				$data['userUpdatedOn']	= $date;
-//        //$data['msg'] = $this->test_model->add_data($data);
-//        //$this->load->view('login');
-//				redirect('http://rosycontact.com/spiff1/popular_after_log.html');
-//      }
-//    }
     
 		public function signin(){
 
@@ -104,9 +59,10 @@
     *@method check_email_availability used to check whether email availabile for registration or not.
     *@return json
     */
-    function check_email_availability(){
-      $email = $this->input->post('user_email');   
-      $result = $this->user_model->check_email($email);
+    function check_email(){
+      $email = $this->input->post('user_email');
+			echo 'ankush'; exit;
+      $result = $this->user_model->check_email_available($email);
       header('Content-Type: application/json');
       echo json_encode( array("success" => $result));exit;
     }

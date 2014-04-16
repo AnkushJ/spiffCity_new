@@ -1,4 +1,4 @@
-(function( $, undefined ) {
+(function($) {
 	$.Slider 				= function( options, element ) {
 		this.$el	= $( element );
 		this._init( options );
@@ -313,7 +313,3 @@
 })( jQuery );
 
 //Initialize
-jQuery.noConflict();
-jQuery(document).ready(function() {
-	jQuery('#slide-pong').cslider();
-});

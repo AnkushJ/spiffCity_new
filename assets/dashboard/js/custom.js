@@ -1,5 +1,6 @@
-$(document).ready(function(){
-			
+
+$(document).on("ready",function(){
+	
 	$("#username").focus(function() {
 		
 		$(this).parent(".input-prepend").addClass("input-prepend-focus");
@@ -33,6 +34,7 @@ $(document).ready(function(){
 			
 	/* ---------- Acivate Functions ---------- */
 	$("#overlay").delay(1250).fadeOut(500);
+	
 	template_functions();
 	init_masonry();
 	sparkline_charts();
@@ -214,6 +216,7 @@ function template_functions(){
 		$(this).parent().parent().parent().fadeOut();
 	});
 	$('.btn-minimize').click(function(e){
+		
 		e.preventDefault();
 		var $target = $(this).parent().parent().next('.box-content');
 		if($target.is(':visible')) $('i',$(this)).removeClass('icon-chevron-up').addClass('icon-chevron-down');

@@ -126,7 +126,6 @@
 			$this->db->where('userId',$iUserId);
 			if($this->db->update('safedoc_user', $arrData))
 			{
-				//echo $this->db->last_query();
 				return true;
 			}
 			else
@@ -145,7 +144,7 @@
 		
 		function get_user_by_id($iUserId){
 			$arrData = array();
-			$this->db->select('id,userid,password,first_name,last_name,email,dob,zip_code,created_date,modified_date');
+			$this->db->select('id,userid,password,first_name,last_name,email,dob,zip_code,img,fb_id,spiff_points,created_date,modified_date,active');
 			$this->db->where('id', $iUserId); 
 			$objQuery = $this->db->get('sp_users');
 			return $objQuery->result_array();
@@ -156,7 +155,6 @@
 			$this->db->where('userid', $data['userid']); 
 			$this->db->where('password', $data['password']); 
 			$objQuery = $this->db->get('sp_users');
-			//print_r($objQuery->row());
 			return $objQuery->row();
 		}
 		
@@ -237,10 +235,7 @@
 		function get_notification_details($iUserId){
 			$this->db->select('notificationByEmail,notificationBySMS');
 			$this->db->where('notificationUserId',$iUserId);
-			
 			$objQuery = $this->db->get('safedoc_notifications');
-			
-			//echo $this->db->last_query();
 			return $objQuery->result_array();
 			
 		}
@@ -324,8 +319,6 @@
 			$this->db->join('safedoc_notifications','safedoc_notifications.notificationUserId= safedoc_user.userId');
 			$this->db->where('userEmail', $iEmailId);
 			$objQuery = $this->db->get();
-			//echo "---".$this->db->last_query();
-			
 			return $objQuery->result_array();
 		}
 		/**
@@ -370,7 +363,6 @@
 				$this->db->where('userCreatedOn',$date);
 			}
 			$objQuery = $this->db->get('safedoc_user');
-			//$this->db->last_query();
 			return $objQuery->result_array();
 		}
 		/**
@@ -388,7 +380,6 @@
 			$this->db->select('userId,userName,userUName,userEmail,userPaidFlag,userDemoFlag,userCreatedOn,userUpdatedOn,lastPaymentDate');
 			$this->db->where('userPaidFlag','1'); 
 			$objQuery = $this->db->get('safedoc_user');
-			//$this->db->last_query();
 			return $objQuery->result_array();
 		}
 		
@@ -409,8 +400,6 @@
 			$this->db->where('userId', $userId);
 			$this->db->where('isActive', 1);
 			$objQuery = $this->db->get();
-			
-			//echo $this->db->last_query();
 			return $objQuery->result_array();
 		}
 		
@@ -430,7 +419,6 @@
 			$this->db->where('activationkey',$activationkey); 
 			
 			$objQuery = $this->db->get();
-			//echo $this->db->last_query();
 			return $objQuery->result_array();
 		}
 		/**
@@ -451,7 +439,6 @@
 			$this->db->where('ActiveOPT',1); 
 			
 			$objQuery = $this->db->get();
-			//echo $this->db->last_query();
 			if($objQuery->result_array()){
 				return true;
 			}
@@ -477,7 +464,6 @@
 			$this->db->where('OTP',$strotpPassword); 
 			
 			$objQuery = $this->db->get();
-			//echo $this->db->last_query();
 			if($objQuery->result_array()){
 				return true;
 			}
@@ -504,7 +490,6 @@
 			$this->db->where('userPaidFlag',0); 
 			
 			$objQuery = $this->db->get();
-			//echo $this->db->last_query();
 			if($objQuery->result_array()){
 				return true;
 			}
@@ -588,6 +573,17 @@
 			 return false;
 			}
 		}
+		
+		
+		function check_email_available($email){
+			$this->db->where("email",$email);
+			$result = $this->db->get('sp_users');
+			if($result->num_rows()>0){
+			 return false;
+			}else{
+			 return true;
+			}
+		}
 			
 			
 			
@@ -600,5 +596,51 @@
 			 return true;
 			}
 		}
+		
+		function chk_password($userid,$password){
+			$this->db->where('password',$password);
+			$this->db->where('id',$userid);
+			$result = $this->db->get('sp_users');
+			if($result->num_rows()>0)
+				return true;
+			else
+				return false;
+		}
+		
+		function save_password($userid,$password){
+			$pswd['password'] = $password;
+			$this->db->where('id',$userid);
+			if($this->db->update('sp_users',$pswd))
+				return true;
+			else
+				return false;
+		}
+		
+		function get_spiff_points($userId){
+			$this->db->select('spiff_points');
+			$this->db->from('sp_users');
+			$this->db->where('id', $userId);
+			$objQuery = $this->db->get();
+			if($objQuery->num_rows>0)
+				return $objQuery->result_array();
+			else
+				return 0;
+		}
+		
+		function get_user_friends($userid){
+			$this->db->from('sp_friendlist');
+			$this->db->join('sp_users','sp_friendlist.friend_id = sp_users.id');
+			$this->db->where('sp_friendlist.user_id',$userid);
+			$result = $this->db->get();
+			if($result->num_rows>0)
+				return $result->result_array();
+			else
+				return array();
+		}
+		
+		function get_user_fb_friends($userid){
+			
+		}
+		
 	}
 ?>

@@ -69,11 +69,11 @@
 				<td style="width: 7%;text-align:left;vertical-align:top;"><?php echo $coupons['title']?></td>
 				<td style="width: 11%;text-align:left;vertical-align:top;">
 					<?php if($coupons['img']!=''){ ?>
-						<img src="<?php echo site_url().'public/upload/coupons/'.$coupons['img'];?>" width="100"/>
+						<img src="<?php echo base_url().'public/upload/coupons/'.$coupons['img'];?>" width="100"/>
 					<?php }
 					 else{
 					?>
-					 <img src="<?php echo site_url().'public/images/no-image.jpg';?>" width="100"/>
+					 <img src="<?php echo base_url('public/images/no-image.jpg');?>" width="100"/>
 					 <?php
 							}
 					 ?>

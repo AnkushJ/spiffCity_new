@@ -5,9 +5,10 @@
 		<div class="span2 main-menu-span">
 			<div class="nav-collapse sidebar-nav">
 				<ul class="nav nav-tabs nav-stacked main-menu">
-					<li><a href="index.html"><i class="icon-home icon-white"></i><span class="hidden-tablet"> Home</span></a></li>
-					<li><a href="profile.html"><i class="icon-user icon-white"></i><span class="hidden-tablet"> My Account</span></a></li>
-					<li><a href="friends.html"><i class="icon-globe icon-white"></i><span class="hidden-tablet"> Friends</span></a></li>
+					<li><a href="<?php echo base_url();?>popular"><i class="icon-home icon-white"></i><span class="hidden-tablet"> Home</span></a></li>
+					<li><a href="<?php echo base_url();?>dashboard"><i class="icon-dashboard icon-white"></i><span class="hidden-tablet"> DashBoard</span></a></li>
+					<li><a href="<?php echo base_url();?>profile"><i class="icon-user icon-white"></i><span class="hidden-tablet"> My Account</span></a></li>
+					<li><a href="<?php echo base_url();?>friends"><i class="icon-globe icon-white"></i><span class="hidden-tablet"> Friends</span></a></li>
 					<li><a href="invite.html"><i class="icon-bullhorn icon-white"></i><span class="hidden-tablet"> Invite Friends</span></a></li> 
 					<li><a href="activities.html"><i class="icon-tasks icon-white"></i><span class="hidden-tablet"> Activities</span></a></li>
 					<li class="active"><a href="redeem.html"><i class="icon-tags icon-white"></i><span class="hidden-tablet"> Redeem</span></a></li>
@@ -87,11 +88,11 @@
                         <div class="post-meta clearfix"> <span class="thumb-rating">
                           <div class="btn-group ">
                             <a href="#" class="btn btn-mini">
-                              <i class="icon-thumbs-up icon-black"></i>216
+                              <i class="icon-thumbs-up icon-black"></i><?php echo $coupon['likes'] ?> 
                             </a>
                           </div>
                           <span class="card-comments"><i class="mini-ico-comment"></i>
-                            <a href="#"><?php echo $coupon['likes'] ?> comments</a>
+                            <a href="#">0 comments</a>
                           </span>
                         </div>
                       </div>

@@ -13,7 +13,6 @@
  * Thanks to vor, eskimoblood, spiffistan
  */
 $(function () {
-
     // Dial logic
     var Dial = function (c, opt) {
 

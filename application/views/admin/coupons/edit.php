@@ -13,9 +13,7 @@
 ?>
 
 <article class="content-box minimizer">
-	
 	<header>
-				
 		<h2 style="padding-right: 90px;">Coupons</h2>
 		<nav>
 			<ul class="button-switch">

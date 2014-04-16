@@ -5,7 +5,10 @@ class Welcome extends CI_Controller {
 	function __construct(){
       parent :: __construct();
 			$this->load->model('Facebook_model');
+			$this->load->model('user_model');
   }
+	
+	
 	/**
 	 * Index Page for this controller.
 	 *
@@ -21,29 +24,22 @@ class Welcome extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see http://codeigniter.com/user_guide/general/urls.html
 	 */
+	
+	
 	public function index()
 	{
 		$fb_data = $this->session->userdata('fb_data'); // This array contains all the user FB information
-		if(($fb_data['me']) or ($this->session->userdata('login')))
-		{	//print_r($this->session->all_userdata());exit;
-
+		$data = array(
+							'fb_data' => $fb_data,
+							);
+		if($this->session->userdata('login')){
 				// If this is a protected section that needs user authentication
 				// you can redirect the user somewhere else
 				// or take any other action you need
-				//redirect('');
-				$data = array(
-							'fb_data' => $fb_data,
-							);
+				
 			redirect('popular');	
 		}
-		else
-		{
-			$data = array(
-							'fb_data' => $fb_data,
-							);
-			$this->load->view('home',$data);
-		//	$this->load->view('home', $data);
-		}
+		$this->load->view('home', $data);
 	}
 	
 	
@@ -57,8 +53,14 @@ class Welcome extends CI_Controller {
 		$data['modified_date']	= $date;
     $data['msg'] = $this->user_model->save_user($data);
 		if($data['msg'] === true){
+			$userdata['userid'] = $this->input->post('username');
+			$userdata['password'] = $this->input->post('password');
+			$id = $this->user_model->get_user_id($userdata);
 			$loginData['login'] = true;
 			$loginData['userid'] = $data['userid'];
+			$loginData['id'] = $id->id;
+			$loginData['first_name'] = $id->first_name;
+			$loginData['fb'] = false;
 			$this->session->set_userdata($loginData);
 			redirect('popular');
 		}
@@ -91,10 +93,9 @@ class Welcome extends CI_Controller {
 				$loginData['login'] = true;
 				$loginData['userid'] = $data['userid'];
 				$loginData['id'] = $id->id;
-				$loginData['firstname'] = $id->first_name;
+				$loginData['first_name'] = $id->first_name;
+				$loginData['fb'] = false;
 				$this->session->set_userdata($loginData);
-				console.log($loginData);
-				console.log('without fb');
 				redirect("popular");
 			 }
 			else{
@@ -105,12 +106,22 @@ class Welcome extends CI_Controller {
   }
 	
 	function signout(){
-		//$this->session->set_userdata('login','no');
 	  unset($this->session->userdata);  
     $this->session->set_flashdata('error', 'Sign out');
 		redirect('welcome');
 	}
 		
+		
+	/*
+	*@method check_email_availability used to check whether email availabile for registration or not.
+	*@return json
+	*/
+	function check_email(){
+		$email = $this->input->post('user_email');
+		$result = $this->user_model->check_email_available($email);
+		header('Content-Type: application/json');
+		echo json_encode( array("success" => $result));exit;
+	}
 		
 }
 

@@ -2483,7 +2483,7 @@ border: 1px solid #DDD; }
 	-ms-border-radius: 50%;
 	-o-border-radius: 50%;
 	border-radius: 50%;
-	opacity: .9;
+	opacity: 1;
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
 }
 

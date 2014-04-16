@@ -14,7 +14,8 @@
 		<link href="http://fonts.googleapis.com/css?family=Droid+Serif" type="text/css" rel="stylesheet">
 		<link href="http://fonts.googleapis.com/css?family=Boogaloo" type="text/css" rel="stylesheet">
 		<link href="http://fonts.googleapis.com/css?family=Economica:700,400italic" type="text/css" rel="stylesheet">
-    
+    <link href="<?php echo base_url();?>assets/css/validationEngine.jquery.css" rel="stylesheet">
+
     
     <!--<link  href="<?php //echo base_url();?>assets/dashboard/css/slide_menu.css" rel="stylesheet">-->
     <!--<link  href="<?php //echo base_url();?>assets/css/jquery.fs.picker.css" rel="stylesheet">-->
@@ -22,7 +23,26 @@
     <!--<!--<link  href="assets/dashboard/css/font-awesome.min.css" rel="stylesheet">-->
     <!--<link  href="<?php //echo base_url();?>assets/css/validationEngine.jquery.css" rel = "stylesheet" type="text/css"/>-->
     <!--<link  href="<?php //echo base_url();?>assets/img/favicon.ico" rel="shortcut icon">-->
-    
+    <style>
+			a.tooltipErr{
+				display: block;
+				font-size: 11px;
+				padding: 0 250px;
+				position: absolute;
+				visibility: visible;
+				z-index: 1030;
+			}
+			.imageFile{
+				height: 30px;
+				line-height: 30px;
+				vertical-align: top !important;
+			}
+			.fbPic{
+				width: 85px;
+				height:85px;
+			}
+			
+		</style> 
   </head>
   <body>
 		<div class="navbar">
@@ -91,14 +111,14 @@
 								</a>
 								<ul class="dropdown-menu">
 									<li>
-										<a href="">
+										<a href="<?php echo base_url('profile');?>">
 											<i class="icon-user">
 											</i>
 											My Account
 										</a>
 									</li>
 									<li>
-										<a href="<?php echo base_url();?>welcome">
+										<a href="<?php echo base_url('popular/signout');?>">
 											<i class="icon-off">
 											</i>
 											Logout

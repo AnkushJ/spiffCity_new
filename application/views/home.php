@@ -35,8 +35,8 @@
 								<ul class="nav">
 									<li class="active"> <a href="#">Home</a> </li>
 									<li><a href="redeem">Redeem</a></li>
-									<li><a href="people">People</a></li>
-									<li><a href="apps">Apps</a></li>
+									<li><a href="">People</a></li>
+									<li><a href="">Apps</a></li>
 									<li><a id="home-login" href="#signin">Login</a></li>
 								</ul>
 							</div>
@@ -163,14 +163,6 @@
                   </div>
                   <div class="actions">              
                     <input type="submit" value="Create your account" class="btn success large" tabindex="9">    
-                    <div class="connect-with"> <span> Or connect with </span></div>
-                    <div class="social-connect-btn clearfix">
-                     <!--fb:login-button show-faces="true" width="200" max-rows="1"></fb:login-button-->
-                     <!--<a href="spiffcity/home/fblogin" class="connect-facebook"> <span> Connect w/ facebook </span> </a>-->
-                     <a class="connect-facebook" href="https://www.facebook.com/dialog/oauth?client_id=561885653907144&amp;redirect_uri=http%3A%2F%2F180.149.246.126%2Fgaurav%2Fspiffcity&amp;state=f546ffb8024a29bde00cbcb9d83600c3&amp;sdk=php-sdk-3.2.3"> <span> Connect w/ facebook </span> </a>
-                     
-                     <!---<a href="#" class="connect-twitter"> <span> Connect w/ twitter </span></a>-->
-                    </div>
                   </div>
                 </fieldset>
               </form>
@@ -370,7 +362,6 @@
       </div>
     </div>
   </div>
-	<?php echo '<pre>';print_r($fb_data);?>
   <div id="copyright">
     <div class="container">
       <div class="span12">
@@ -436,7 +427,7 @@
 							jQuery("#user_email").html("font color='GREEN'>Checking</font>");
 							jQuery.ajax({
 								type:"POST",
-								url:"<?php echo base_url('signUp'); ?>/check_email_availability",
+								url:"<?php echo base_url('welcome/check_email'); ?>",
 								data:"user_email="+jQuery("#email").val(),
 								success:function(msg){
 									if (msg['success'] == true) {
